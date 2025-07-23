@@ -23,7 +23,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>FFCS Planner</title>
         <link rel="manifest" href="./manifest.webmanifest" />
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUa8r5gFZgGF9L8qAo8Y0LYI8KnY2jjhkYZ7L5xZe7L1Ue8K2yLMVdXvzXpV" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+        <link rel="stylesheet" href="./css/add-on.css">
         <link
             rel="icon"
             sizes="192x192"
@@ -97,6 +100,55 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             /* Button hover animations */
             .btn {
                 transition: all 0.3s ease !important;
+            }
+            
+            /* Modal enhancements */
+            .modal-backdrop {
+                background-color: rgba(0, 0, 0, 0.6) !important;
+                backdrop-filter: blur(3px);
+                -webkit-backdrop-filter: blur(3px);
+            }
+            
+            .modal-content {
+                background: rgba(25, 25, 25, 0.95) !important;
+                border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                border-radius: 15px !important;
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                color: white !important;
+            }
+            
+            .modal-header {
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+                background: rgba(35, 35, 35, 0.9) !important;
+                border-radius: 15px 15px 0 0 !important;
+            }
+            
+            .modal-footer {
+                border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+                background: rgba(35, 35, 35, 0.9) !important;
+                border-radius: 0 0 15px 15px !important;
+            }
+            
+            .modal-title {
+                color: white !important;
+                font-weight: 600 !important;
+            }
+            
+            .btn-close {
+                filter: invert(1) grayscale(100%) brightness(200%) !important;
+            }
+            
+            .modal-body {
+                color: rgba(255, 255, 255, 0.9) !important;
+            }
+            
+            .modal {
+                z-index: 1055 !important;
+            }
+            
+            .modal-backdrop {
+                z-index: 1050 !important;
             }
             
             /* Card and container improvements */
@@ -227,6 +279,35 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             
             .card, .modal {
                 z-index: 15;
+            }
+            
+            /* Fix dropdown z-index issues - use extremely high values */
+            .dropdown-menu {
+                z-index: 9999 !important;
+                position: absolute !important;
+            }
+            
+            .btn-group {
+                position: relative;
+                z-index: 9998 !important;
+            }
+            
+            /* Ensure timetable and all containers don't interfere */
+            #timetable, .table-responsive {
+                position: relative;
+                z-index: 1 !important;
+            }
+            
+            /* Force container positioning */
+            .container-xxl {
+                z-index: 1 !important;
+            }
+            
+            /* Override any transform or backdrop-filter that creates stacking context */
+            .container-xxl .table-responsive {
+                transform: none !important;
+                backdrop-filter: none !important;
+                z-index: 1 !important;
             }
         </style>
         <!-- End Decorative Doodles -->
@@ -939,45 +1020,57 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <div class="container-sm px-4">
             <div id="option-buttons" class="row justify-content-between">
                 <div class="col-auto mb-2 text-center">
-                    <div class="btn-group" role="group">
+                    <div class="btn-group" role="group" style="position: relative; z-index: 1000;">
                         <button
                             id="tt-picker-button"
                             class="btn btn-primary btn-sm dropdown-toggle"
                             type="button"
                             data-bs-toggle="dropdown"
-                            course-list
-                            table
                             aria-expanded="false"
-                            style="border-top-right-radius: 0; border-bottom-right-radius: 0;
-                            border-radius: 15px 0 0 15px; border-right: 1px solid rgba(255,255,255,0.2);"
-                            "
+                            style="border-top-right-radius: 0; border-bottom-right-radius: 0; border-radius: 15px 0 0 15px; border-right: 1px solid rgba(255,255,255,0.2);"
                         >
                             Table 1
                         </button>
-                        <ul id="tt-picker-dropdown" class="dropdown-menu">
+                        <ul id="tt-picker-dropdown" class="dropdown-menu" style="z-index: 99999 !important; position: absolute !important;">
                             <li>
-                                <table class="dropdown-item">
-                                    <td class="tt-picker-label">
-                                        <a
-                                            href="JavaScript:void(0);"
-                                            data-table-id="0"
-                                            >Table 1</a
-                                        >
-                                    </td>
-                                    <td>
-                                        <a
-                                            class="tt-picker-rename"
-                                            href="JavaScript:void(0);"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#rename-modal"
-                                            title="Rename"
-                                        >
-                                            <i
-                                                class="fas fa-pencil-alt"
-                                            ></i>
-                                        </a>
-                                    </td>
-                                </table>
+                                <div class="d-flex justify-content-between align-items-center px-3 py-2">
+                                    <a
+                                        class="dropdown-item p-0 tt-picker-label"
+                                        href="JavaScript:void(0);"
+                                        data-table-id="0"
+                                        style="flex: 1;"
+                                    >Table 1</a>
+                                    <a
+                                        class="tt-picker-rename ms-2"
+                                        href="JavaScript:void(0);"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#rename-modal"
+                                        title="Rename"
+                                        style="color: #6c757d;"
+                                    >
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d-flex justify-content-between align-items-center px-3 py-2">
+                                    <a
+                                        class="dropdown-item p-0 tt-picker-label"
+                                        href="JavaScript:void(0);"
+                                        data-table-id="1"
+                                        style="flex: 1;"
+                                    >Table 2</a>
+                                    <a
+                                        class="tt-picker-rename ms-2"
+                                        href="JavaScript:void(0);"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#rename-modal"
+                                        title="Rename"
+                                        style="color: #6c757d;"
+                                    >
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                </div>
                             </li>
                         </ul>
                         <button
@@ -1685,5 +1778,77 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 (d.head || d.body).appendChild(s);
             })();
         </script> -->
+        
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <!-- Bootstrap JavaScript Bundle -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+        
+        <!-- Temporary fix for dropdown functionality -->
+        <script>
+            $(document).ready(function() {
+                // Initialize Bootstrap dropdown manually if it's not working
+                var dropdownButton = document.getElementById('tt-picker-button');
+                var dropdownMenu = document.getElementById('tt-picker-dropdown');
+                
+                if (dropdownButton && dropdownMenu) {
+                    // Create Bootstrap dropdown instance
+                    var dropdown = new bootstrap.Dropdown(dropdownButton);
+                    
+                    // Force extremely high z-index and positioning
+                    dropdownMenu.style.zIndex = '99999';
+                    dropdownMenu.style.position = 'absolute';
+                    
+                    // Force the dropdown to appear on top by moving it to body
+                    dropdown._menu = dropdownMenu;
+                    
+                    // Override Bootstrap's show method to ensure proper positioning
+                    const originalShow = dropdown.show;
+                    dropdown.show = function() {
+                        originalShow.call(this);
+                        // Force z-index again after Bootstrap manipulates it
+                        setTimeout(() => {
+                            dropdownMenu.style.zIndex = '99999';
+                            dropdownMenu.style.position = 'absolute';
+                        }, 10);
+                    };
+                    
+                    // Add click event listener as backup
+                    dropdownButton.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        // Force z-index before toggling
+                        dropdownMenu.style.zIndex = '99999';
+                        dropdownMenu.style.position = 'absolute';
+                        
+                        // Toggle the dropdown
+                        if (dropdownMenu.classList.contains('show')) {
+                            dropdown.hide();
+                        } else {
+                            dropdown.show();
+                        }
+                    });
+                }
+                
+                // Handle dropdown item clicks
+                $(document).on('click', '.tt-picker-label', function(e) {
+                    e.preventDefault();
+                    var tableId = $(this).data('table-id');
+                    var tableName = $(this).text();
+                    
+                    // Update button text
+                    $('#tt-picker-button').text(tableName);
+                    
+                    // Hide dropdown
+                    var dropdown = bootstrap.Dropdown.getInstance(dropdownButton);
+                    if (dropdown) {
+                        dropdown.hide();
+                    }
+                    
+                    console.log('Selected table:', tableId, tableName);
+                });
+            });
+        </script>
     </body>
 </html>
