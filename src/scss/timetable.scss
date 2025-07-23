@@ -12,11 +12,10 @@
         border-radius: 15px !important;
         padding: 0.75rem 1.5rem !important;
         font-weight: 500 !important;
-        transition: all 0.3s ease !important;
-        backdrop-filter: blur(10px) !important;
+        transition: background-color 0.2s ease, transform 0.2s ease !important;
         
         &:hover {
-            transform: translateY(-2px) !important;
+            transform: translateY(-1px) !important;
         }
     }
     
@@ -26,7 +25,7 @@
         
         &:hover {
             background: rgba(13, 110, 253, 1) !important;
-            transform: translateY(-2px) !important;
+            transform: translateY(-1px) !important;
         }
     }
     
@@ -36,7 +35,7 @@
         
         &:hover {
             background: rgba(76, 175, 80, 1) !important;
-            transform: translateY(-2px) !important;
+            transform: translateY(-1px) !important;
         }
     }
     
@@ -46,7 +45,7 @@
         
         &:hover {
             background: rgba(255, 193, 7, 1) !important;
-            transform: translateY(-2px) !important;
+            transform: translateY(-1px) !important;
         }
     }
     
@@ -56,7 +55,7 @@
         
         &:hover {
             background: rgba(220, 53, 69, 1) !important;
-            transform: translateY(-2px) !important;
+            transform: translateY(-1px) !important;
         }
     }
 }
@@ -68,18 +67,17 @@
 }
 
 #tt-picker-dropdown {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.15);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 15px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     
     a {
         color: var(--text-color);
         text-decoration: none;
         padding: 8px 16px;
         border-radius: 10px;
-        transition: all 0.3s ease;
+        transition: background-color 0.2s ease;
         
         &:hover {
             color: var(--text-color);
@@ -140,17 +138,16 @@
         width: fit-content;
         margin: 0.3rem;
         background: rgba(255, 149, 0, 1);
-        backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 149, 0, 1);
         border-radius: 20px;
         padding: 8px 16px;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.2s ease, transform 0.2s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .quick-button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        transform: translateY(-1px);
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
         background: rgba(255, 149, 0, 1);
         border-color: rgba(255, 149, 0, 1);
         color: white;
@@ -159,18 +156,18 @@
     .quick-button.highlight {
         background: rgba(76, 175, 80, 1);
         border-color: rgba(76, 175, 80, 1);
-        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.2);
+        box-shadow: 0 3px 12px rgba(76, 175, 80, 0.2);
     }
 }
 
 #timetable {
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(20px);
+    background: rgba(0, 0, 0, 0.6);
     border-radius: 16px;
     padding: 1.5rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.08);
     margin: 1rem 0;
+    will-change: auto;
     
     .table-responsive {
         border-radius: 12px;
@@ -197,13 +194,12 @@
         // Day labels (left column)
         .day {
             background: #0c0d24 !important;
-            backdrop-filter: blur(15px);
             border-radius: 8px !important;
             color: white !important;
             font-weight: 600;
             font-size: 0.8rem;
             padding: 12px 8px !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -214,13 +210,12 @@
         // Time headers (top row)
         tr:first-child td:not(.day) {
             background: #131444 !important;
-            backdrop-filter: blur(15px);
             border-radius: 8px !important;
             color: white !important;
             font-weight: 700;
             font-size: 0.75rem;
             padding: 8px 4px !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
             text-align: center;
             vertical-align: middle;
@@ -229,13 +224,12 @@
         // Lab hours time headers (second row)
         tr:nth-child(2) td:not(.day) {
             background: #0a2051 !important;
-            backdrop-filter: blur(15px);
             border-radius: 8px !important;
             color: white !important;
             font-weight: 700;
             font-size: 0.75rem;
             padding: 8px 4px !important;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1) !important;
             text-align: center;
             vertical-align: middle;
@@ -244,12 +238,11 @@
         // Regular timetable cells
         td:not(.day) {
             background: #382f5e !important;
-            backdrop-filter: blur(15px);
             border-radius: 8px !important;
             margin: 2px;
             padding: 12px 6px !important;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
             position: relative;
             border: 1px solid rgba(255, 255, 255, 0.08) !important;
             color: rgba(255, 255, 255, 0.9);
@@ -260,9 +253,7 @@
             vertical-align: middle;
             
             &:hover {
-                background: rgba(56, 47, 94, 0.9) !important;
-                transform: translateY(-1px);
-                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+                background: rgba(56, 47, 94, 0.8) !important;
                 border-color: rgba(255, 255, 255, 0.12) !important;
                 color: white;
             }
@@ -275,12 +266,10 @@
             font-weight: 600;
             font-size: 0.7rem;
             border: 1px solid rgba(76, 175, 80, 0.5) !important;
-            box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
+            box-shadow: 0 1px 6px rgba(76, 175, 80, 0.3);
             
             &:hover {
                 background: rgba(76, 175, 80, 1) !important;
-                transform: translateY(-1px);
-                box-shadow: 0 4px 16px rgba(76, 175, 80, 0.4);
             }
         }
         
@@ -326,7 +315,7 @@
             background: rgba(78, 205, 196, 0.9) !important;
             color: white !important;
             border: 2px solid rgba(78, 205, 196, 1) !important;
-            box-shadow: 0 0 16px rgba(78, 205, 196, 0.4);
+            box-shadow: 0 0 8px rgba(78, 205, 196, 0.4);
         }
         
         tr {
@@ -355,30 +344,26 @@
     td.lab-hour {
         font-weight: 700;
         background: #0a2051 !important;
-        backdrop-filter: blur(15px);
         border: 1px solid rgba(10, 32, 81, 0.4) !important;
         cursor: default;
         color: #ffffff;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
         
         &:hover {
             background: rgba(10, 32, 81, 0.8) !important;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
     }
 
     td.theory-hour {
         font-weight: 700;
         background: #0a2051 !important;
-        backdrop-filter: blur(15px);
         border: 1px solid rgba(10, 32, 81, 0.4) !important;
         cursor: default;
         color: #ffffff;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
         
         &:hover {
             background: rgba(10, 32, 81, 0.8) !important;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
     }
 
@@ -386,15 +371,13 @@
     td.lunch {
         font-weight: 700;
         background: #0a2051 !important;
-        backdrop-filter: blur(15px);
         border: 1px solid rgba(10, 32, 81, 0.5) !important;
         cursor: default;
         color: white;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
         
         &:hover {
             background: rgba(10, 32, 81, 0.8) !important;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
     }
 
@@ -402,30 +385,26 @@
         text-transform: uppercase;
         color: var(--text-light-color);
         background: rgba(42, 42, 42, 0.6) !important;
-        backdrop-filter: blur(15px);
         border: 1px solid rgba(42, 42, 42, 0.7) !important;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: background-color 0.2s ease, border-color 0.2s ease;
         font-weight: 500;
         
         &:hover {
             color: var(--text-color);
             background: rgba(76, 175, 80, 0.4) !important;
             border-color: rgba(76, 175, 80, 0.5) !important;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.2);
         }
         
         &.highlight {
             color: var(--text-color);
             background: rgba(76, 175, 80, 0.4) !important;
             border-color: rgba(76, 175, 80, 0.5) !important;
-            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.2);
+            box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
             
             &:hover {
                 background: rgba(76, 175, 80, 0.5) !important;
                 border-color: rgba(76, 175, 80, 0.6) !important;
-                box-shadow: 0 8px 24px rgba(76, 175, 80, 0.3);
             }
         }
         
@@ -438,9 +417,7 @@
             opacity: 0.7;
             
             &:hover {
-                transform: none;
                 background: rgba(42, 42, 42, 0.3) !important;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             }
         }
     }
@@ -449,27 +426,25 @@
         background: rgba(255, 68, 68, 0.4) !important;
         border-color: rgba(255, 68, 68, 0.5) !important;
         color: #ffffff !important;
-        backdrop-filter: blur(15px);
-        box-shadow: 0 6px 20px rgba(255, 68, 68, 0.3) !important;
+        box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3) !important;
         animation: pulse-clash 2s infinite;
         
         &:hover {
             background: rgba(255, 68, 68, 0.5) !important;
-            box-shadow: 0 8px 24px rgba(255, 68, 68, 0.4) !important;
         }
     }
 }
 
-// Pulse animation for clash cells
+// Pulse animation for clash cells - simplified for better performance
 @keyframes pulse-clash {
     0% {
-        box-shadow: 0 6px 20px rgba(255, 68, 68, 0.3);
+        box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
     }
     50% {
-        box-shadow: 0 8px 24px rgba(255, 68, 68, 0.5);
+        box-shadow: 0 4px 12px rgba(255, 68, 68, 0.4);
     }
     100% {
-        box-shadow: 0 6px 20px rgba(255, 68, 68, 0.3);
+        box-shadow: 0 2px 8px rgba(255, 68, 68, 0.3);
     }
 }
 
