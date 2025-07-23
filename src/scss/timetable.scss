@@ -1,10 +1,65 @@
 /**
- *  This style sheet contains the custom styling applied
- *  to the option buttons, quick selection buttons and
- *  the timetable
+ *  Modern glassmorphic styling for the timetable section
+ *  with pill-shaped elements and clean design
  */
 
 @import 'global/colors.scss';
+
+// Option buttons styling with glassmorphic effect - using universal design
+#option-buttons {
+    .btn {
+        border: none !important;
+        border-radius: 15px !important;
+        padding: 0.75rem 1.5rem !important;
+        font-weight: 500 !important;
+        transition: all 0.3s ease !important;
+        backdrop-filter: blur(10px) !important;
+        
+        &:hover {
+            transform: translateY(-2px) !important;
+        }
+    }
+    
+    .btn-primary {
+        background: rgba(13, 110, 253, 0.8) !important;
+        color: white !important;
+        
+        &:hover {
+            background: rgba(13, 110, 253, 1) !important;
+            transform: translateY(-2px) !important;
+        }
+    }
+    
+    .btn-success {
+        background: rgba(76, 175, 80, 0.8) !important;
+        color: white !important;
+        
+        &:hover {
+            background: rgba(76, 175, 80, 1) !important;
+            transform: translateY(-2px) !important;
+        }
+    }
+    
+    .btn-warning {
+        background: rgba(255, 193, 7, 0.8) !important;
+        color: #212529 !important;
+        
+        &:hover {
+            background: rgba(255, 193, 7, 1) !important;
+            transform: translateY(-2px) !important;
+        }
+    }
+    
+    .btn-danger {
+        background: rgba(220, 53, 69, 0.8) !important;
+        color: white !important;
+        
+        &:hover {
+            background: rgba(220, 53, 69, 1) !important;
+            transform: translateY(-2px) !important;
+        }
+    }
+}
 
 #tt-picker-button {
     max-width: 180px;
@@ -12,13 +67,34 @@
     text-overflow: ellipsis;
 }
 
-#tt-picker-dropdown a {
-    color: var(--text-color);
-    text-decoration: none;
-}
-
-#tt-picker-dropdown a:hover {
-    color: var(--text-color);
+#tt-picker-dropdown {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    
+    a {
+        color: var(--text-color);
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        
+        &:hover {
+            color: var(--text-color);
+            background: rgba(255, 255, 255, 0.1);
+        }
+    }
+    
+    .dropdown-item {
+        background: transparent;
+        border: none;
+        
+        &:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+    }
 }
 
 .tt-picker-label {
@@ -63,81 +139,350 @@
         flex-grow: 1;
         width: fit-content;
         margin: 0.3rem;
-        background-color: var(--quick-button-color);
+        background: rgba(255, 149, 0, 1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 149, 0, 1);
+        border-radius: 20px;
+        padding: 8px 16px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     }
 
     .quick-button:hover {
-        background-color: var(--quick-button-highlight-color);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        background: rgba(255, 149, 0, 1);
+        border-color: rgba(255, 149, 0, 1);
+        color: white;
     }
 
     .quick-button.highlight {
-        background-color: var(--quick-button-highlight-color);
+        background: rgba(76, 175, 80, 1);
+        border-color: rgba(76, 175, 80, 1);
+        box-shadow: 0 6px 20px rgba(76, 175, 80, 0.2);
     }
 }
 
 #timetable {
-    td {
-        border: 1px solid var(--table-border-color);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    margin: 1rem 0;
+    
+    .table-responsive {
+        border-radius: 12px;
+        overflow: hidden;
+        background: transparent;
+    }
+    
+    .table {
+        background: transparent;
+        border: none;
+        overflow: hidden;
+        border-collapse: separate;
+        border-spacing: 4px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        
+        // Override global table styles for glassmorphic design
+        th, td {
+            border: none !important;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        
+        // Day labels (left column)
+        .day {
+            background: #0c0d24 !important;
+            backdrop-filter: blur(15px);
+            border-radius: 8px !important;
+            color: white !important;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 12px 8px !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        // Time headers (top row)
+        tr:first-child td:not(.day) {
+            background: #131444 !important;
+            backdrop-filter: blur(15px);
+            border-radius: 8px !important;
+            color: white !important;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 8px 4px !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        // Lab hours time headers (second row)
+        tr:nth-child(2) td:not(.day) {
+            background: #0a2051 !important;
+            backdrop-filter: blur(15px);
+            border-radius: 8px !important;
+            color: white !important;
+            font-weight: 700;
+            font-size: 0.75rem;
+            padding: 8px 4px !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        // Regular timetable cells
+        td:not(.day) {
+            background: #382f5e !important;
+            backdrop-filter: blur(15px);
+            border-radius: 8px !important;
+            margin: 2px;
+            padding: 12px 6px !important;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.7rem;
+            font-weight: 500;
+            min-height: 50px;
+            text-align: center;
+            vertical-align: middle;
+            
+            &:hover {
+                background: rgba(56, 47, 94, 0.9) !important;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+                border-color: rgba(255, 255, 255, 0.12) !important;
+                color: white;
+            }
+        }
+        
+        // Filled cells with courses
+        .tt-slot-filled {
+            background: rgba(76, 175, 80, 0.9) !important;
+            color: white !important;
+            font-weight: 600;
+            font-size: 0.7rem;
+            border: 1px solid rgba(76, 175, 80, 0.5) !important;
+            box-shadow: 0 2px 10px rgba(76, 175, 80, 0.3);
+            
+            &:hover {
+                background: rgba(76, 175, 80, 1) !important;
+                transform: translateY(-1px);
+                box-shadow: 0 4px 16px rgba(76, 175, 80, 0.4);
+            }
+        }
+        
+        // Lab cells styling
+        .lab-slot {
+            background: rgba(33, 150, 243, 0.9) !important;
+            color: white !important;
+            font-weight: 600;
+            font-size: 0.7rem;
+            border: 1px solid rgba(33, 150, 243, 0.5) !important;
+            
+            &:hover {
+                background: rgba(33, 150, 243, 1) !important;
+            }
+        }
+        
+        // Lunch break styling
+        .lunch-cell {
+            background: #0a2051 !important;
+            color: white !important;
+            font-weight: 700;
+            font-size: 0.7rem;
+            border: 1px solid rgba(10, 32, 81, 0.4) !important;
+            
+            &:hover {
+                background: rgba(10, 32, 81, 0.8) !important;
+            }
+        }
+        
+        // Empty slots
+        .empty-slot {
+            background: #382f5e !important;
+            color: rgba(255, 255, 255, 0.4);
+            
+            &:hover {
+                background: rgba(56, 47, 94, 0.7) !important;
+                color: rgba(255, 255, 255, 0.7);
+            }
+        }
+        
+        // Selected cells
+        .selected-cell {
+            background: rgba(78, 205, 196, 0.9) !important;
+            color: white !important;
+            border: 2px solid rgba(78, 205, 196, 1) !important;
+            box-shadow: 0 0 16px rgba(78, 205, 196, 0.4);
+        }
+        
+        tr {
+            border: none;
+            
+            &:first-child td:first-child {
+                border-top-left-radius: 15px;
+            }
+            &:first-child td:last-child {
+                border-top-right-radius: 15px;
+            }
+            &:last-child td:first-child {
+                border-bottom-left-radius: 15px;
+            }
+            &:last-child td:last-child {
+                border-bottom-right-radius: 15px;
+            }
+        }
     }
 
     td div {
         font-size: 0.9em;
+        font-weight: 500;
     }
 
     td.lab-hour {
-        font-weight: bold;
-        background-color: var(--lab-color);
+        font-weight: 700;
+        background: #0a2051 !important;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(10, 32, 81, 0.4) !important;
         cursor: default;
+        color: #ffffff;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        
+        &:hover {
+            background: rgba(10, 32, 81, 0.8) !important;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
     }
 
     td.theory-hour {
-        font-weight: bold;
-        background-color: var(--theory-color);
+        font-weight: 700;
+        background: #0a2051 !important;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(10, 32, 81, 0.4) !important;
         cursor: default;
+        color: #ffffff;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        
+        &:hover {
+            background: rgba(10, 32, 81, 0.8) !important;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
     }
 
     td.day,
     td.lunch {
-        font-weight: bold;
-        background-color: var(--day-lunch-color);
+        font-weight: 700;
+        background: #0a2051 !important;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(10, 32, 81, 0.5) !important;
         cursor: default;
+        color: white;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+        
+        &:hover {
+            background: rgba(10, 32, 81, 0.8) !important;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
     }
 
     td.period {
         text-transform: uppercase;
         color: var(--text-light-color);
-        background-color: var(--period-color);
+        background: rgba(42, 42, 42, 0.6) !important;
+        backdrop-filter: blur(15px);
+        border: 1px solid rgba(42, 42, 42, 0.7) !important;
         cursor: pointer;
-    }
-
-    td.period:hover {
-        color: var(--text-color);
-        background-color: var(--period-highlight-color);
-        cursor: pointer;
-    }
-
-    td.period.highlight:hover {
-        color: var(--text-light-color);
-        background-color: var(--period-highlight-color);
-        cursor: pointer;
-    }
-
-    td.period.highlight {
-        color: var(--text-color);
-        background-color: var(--period-highlight-color);
-        cursor: pointer;
-    }
-
-    td.period[disabled] {
-        text-transform: capitalize;
-        color: var(--text-light-color);
-        background-color: var(--period-color);
-        cursor: default;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        
+        &:hover {
+            color: var(--text-color);
+            background: rgba(76, 175, 80, 0.4) !important;
+            border-color: rgba(76, 175, 80, 0.5) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.2);
+        }
+        
+        &.highlight {
+            color: var(--text-color);
+            background: rgba(76, 175, 80, 0.4) !important;
+            border-color: rgba(76, 175, 80, 0.5) !important;
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.2);
+            
+            &:hover {
+                background: rgba(76, 175, 80, 0.5) !important;
+                border-color: rgba(76, 175, 80, 0.6) !important;
+                box-shadow: 0 8px 24px rgba(76, 175, 80, 0.3);
+            }
+        }
+        
+        &[disabled] {
+            text-transform: capitalize;
+            color: var(--text-light-color);
+            background: rgba(42, 42, 42, 0.3) !important;
+            border-color: rgba(42, 42, 42, 0.4) !important;
+            cursor: default;
+            opacity: 0.7;
+            
+            &:hover {
+                transform: none;
+                background: rgba(42, 42, 42, 0.3) !important;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+        }
     }
 
     td.clash {
-        background-color: var(--period-clash-color) !important;
-        color: var(--on-clash-color) !important;
+        background: rgba(255, 68, 68, 0.4) !important;
+        border-color: rgba(255, 68, 68, 0.5) !important;
+        color: #ffffff !important;
+        backdrop-filter: blur(15px);
+        box-shadow: 0 6px 20px rgba(255, 68, 68, 0.3) !important;
+        animation: pulse-clash 2s infinite;
+        
+        &:hover {
+            background: rgba(255, 68, 68, 0.5) !important;
+            box-shadow: 0 8px 24px rgba(255, 68, 68, 0.4) !important;
+        }
+    }
+}
+
+// Pulse animation for clash cells
+@keyframes pulse-clash {
+    0% {
+        box-shadow: 0 6px 20px rgba(255, 68, 68, 0.3);
+    }
+    50% {
+        box-shadow: 0 8px 24px rgba(255, 68, 68, 0.5);
+    }
+    100% {
+        box-shadow: 0 6px 20px rgba(255, 68, 68, 0.3);
+    }
+}
+
+// Container styling for better visual integration
+.container-xxl {
+    padding: 2rem 1rem;
+
+    .table-responsive {
+        background: transparent;
+        border-radius: 12px;
+        padding: 0;
+        backdrop-filter: none;
+        box-shadow: none;
     }
 }
 
@@ -158,4 +503,75 @@
     #option-buttons button span {
         display: none;
     }
+}
+
+// Enhanced responsive styles for mobile devices
+@media screen and (max-width: 768px) {
+    #timetable {
+        padding: 1rem;
+        border-radius: 15px;
+        
+        .table {
+            border-spacing: 4px;
+            
+            td:not(.day) {
+                padding: 8px 4px !important;
+                font-size: 0.7rem;
+                min-height: 40px;
+            }
+            
+            .day {
+                padding: 8px 6px !important;
+                font-size: 0.75rem;
+            }
+            
+            tr:first-child td:not(.day) {
+                padding: 8px 4px !important;
+                font-size: 0.7rem;
+            }
+        }
+    }
+    
+    .container-xxl {
+        padding: 1rem 0.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    #timetable {
+        padding: 0.5rem;
+        
+        .table {
+            border-spacing: 2px;
+            
+            td:not(.day) {
+                padding: 6px 2px !important;
+                font-size: 0.65rem;
+                min-height: 35px;
+                border-radius: 8px !important;
+            }
+            
+            .day {
+                padding: 6px 4px !important;
+                font-size: 0.7rem;
+                border-radius: 8px !important;
+            }
+        }
+    }
+}
+
+#timetable {
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+#tt-picker-button {
+    border-radius: 0 !important;
+}
+
+.btn-group {
+    border-radius: 0 !important;
 }

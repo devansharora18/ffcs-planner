@@ -136,7 +136,16 @@ function hideUserOpt() {
             userOptDiv.style.setProperty('display', 'none', 'important');
         } else {
             throw new Error('Element with id "user-opt" not found');
+        } try {
+        const userOptDiv = document.getElementById('user-opt');
+        if (userOptDiv) {
+            userOptDiv.style.setProperty('display', 'none', 'important');
+        } else {
+            throw new Error('Element with id "user-opt" not found');
         }
+    } catch (error) {
+        console.error('Error in hiding user options div:', error);
+    }
     } catch (error) {
         console.error('Error in hiding user options div:', error);
     }
@@ -788,14 +797,46 @@ function getCreditsFromCourseName(courseName) {
     var allSpan = subjectArea.querySelectorAll('.cname');
     for (const span of allSpan) {
         if (span.innerText.toLowerCase() === courseName.toLowerCase()) {
-            return parseCreditValue(
-                span.parentElement.parentElement
-                    .querySelector('h4')
-                    .innerText.replace('[', '')
-                    .replace(']', ''),
-            );
+            // Try to find the h4 element containing credits
+            var creditsElement = null;
+            
+            // First try: look for h4 in the same parent container
+            var container = span.parentElement.parentElement;
+            if (container) {
+                creditsElement = container.querySelector('h4');
+            }
+            
+            // Second try: look in the closest dropdown container
+            if (!creditsElement) {
+                var dropdown = span.closest('.dropdown-teacher');
+                if (dropdown) {
+                    creditsElement = dropdown.querySelector('h4');
+                }
+            }
+            
+            // Third try: look for h4 as a sibling or in nearby elements
+            if (!creditsElement) {
+                var currentElement = span.parentElement;
+                while (currentElement && !creditsElement) {
+                    creditsElement = currentElement.querySelector('h4');
+                    currentElement = currentElement.parentElement;
+                    // Prevent infinite loop
+                    if (currentElement === document.body) break;
+                }
+            }
+            
+            if (creditsElement && creditsElement.innerText) {
+                return parseCreditValue(
+                    creditsElement.innerText.replace('[', '').replace(']', '')
+                );
+            } else {
+                console.warn(`Credits element not found for course: ${courseName}`);
+                return 0; // Return default value instead of undefined
+            }
         }
     }
+    console.warn(`Course not found in subject area: ${courseName}`);
+    return 0; // Return default value instead of undefined
 }
 
 // to get courseCode and Course Title from
@@ -1225,6 +1266,7 @@ function fillLeftBoxInCoursePanel() {
         leftBox.innerHTML = '';
     }
     rearrangeTeacherRefresh();
+    addEventListeners();
 }
 
 // to build the HTML for course/subject dropdown
@@ -1254,11 +1296,13 @@ function createSubjectDropdown(courseName, subject) {
     const span = document.createElement('p');
     span.classList.add('arrow');
 
-    const h4 = document.createElement('h4');
-    h4.innerText = `[${subject.credits}]`;
     h2.appendChild(span);
     h2sDiv.appendChild(h2);
-    h2sDiv.appendChild(h4);
+
+    // Add credits element as a sibling to h2
+    const creditsH4 = document.createElement('h4');
+    creditsH4.innerText = `[${subject.credits || '0'}]`;
+    h2sDiv.appendChild(creditsH4);
 
     dropdownHeading.appendChild(h2sDiv);
 
@@ -1491,19 +1535,21 @@ function addSubDiv(subjectName, credits) {
     divH2s.style.flexDirection = 'row';
     const h2 = document.createElement('h2');
     const spanCname = document.createElement('span');
-    spanCname.c;
-    lassList.add('cname');
+    spanCname.classList.add('cname');
     spanCname.textContent = subjectName;
 
     const pArrow = document.createElement('p');
     pArrow.classList.add('arrow');
 
-    const h4 = document.createElement('h4');
-    h4.textContent = `[${credits}]`;
-    divH2s.appendChild(h2);
-    divH2s.appendChild(h4);
     h2.appendChild(spanCname);
     h2.appendChild(pArrow);
+    divH2s.appendChild(h2);
+    
+    // Add credits element
+    const creditsH4 = document.createElement('h4');
+    creditsH4.innerText = `[${credits || '0'}]`;
+    divH2s.appendChild(creditsH4);
+    
     divHeading.appendChild(divH2s);
     div.appendChild(divHeading);
     const ul = document.createElement('ul');
@@ -1593,8 +1639,10 @@ function addEventListnerToCourseList() {
 // Targets the li to make it toggable when clicked anywhere on the li element eg the teacher name list
 function addEventListeners() {
     var listItems = document.querySelectorAll('#subjectArea li');
+    console.log('Adding event listeners to', listItems.length, 'li elements');
     for (var i = 0; i < listItems.length; i++) {
         listItems[i].addEventListener('click', liClick);
+        console.log('Added event listener to li element', i);
     }
 }
 
@@ -1842,6 +1890,7 @@ function closeEditPref() {
     document.getElementById('div-for-edit-course').style.display = 'none';
     document.getElementById('div-for-edit-teacher').style.display = 'none';
     editSub = false;
+    editTeacher = false;
     createSubjectJsonFromHtml();
     addEventListeners();
     revertRerrange();
@@ -1858,6 +1907,7 @@ function liClick() {
         var radioButton = this.querySelector('input[type="radio"]');
         
         if (!radioButton) {
+            console.error('No radio button found inside the list item');
             throw new Error('No radio button found inside the list item');
         }
 
@@ -2016,6 +2066,7 @@ function revertRerrange() {
         });
         makeRadioTrueOnPageLoad();
     });
+    addEventListeners();
 }
 // ------------------ Arrange Ends Here ------------------
 
@@ -2162,6 +2213,7 @@ function revertRerrangeAttack() {
         });
         makeRadioTrueAttack();
     });
+    addEventListeners();
 }
 
 function slotsForAttack() {
@@ -2651,7 +2703,7 @@ $(() => {
     /*
         Click event to sort the course list
      */
-    $('#course-list th:not(:last)').on('click', function () {
+    $('#course-list th:not(:last-child)').on('click', function () {
         var isAscending = false;
         var isDescending = false;
         var $items = retrieveColumnItems($(this));
@@ -2744,7 +2796,12 @@ function getColumnIndex(column) {
         return el.innerText;
     });
 
-    return columns.indexOf(column.innerText || column);
+    // Handle case-insensitive matching for column names
+    var columnText = column.innerText || column;
+    var index = columns.findIndex(col => col.toLowerCase() === columnText.toLowerCase());
+    
+    // Fallback to original logic if case-insensitive match fails
+    return index !== -1 ? index : columns.indexOf(columnText);
 }
 
 /*
@@ -3777,6 +3834,7 @@ window.initializeTimetable = () => {
             showAddTeacherDiv();
             activateSortableForCourseList();
             addEventListnerToCourseList();
+            addEventListeners();
             makeRadioTrueOnPageLoad();
             lastMerge = JSON.parse(JSON.stringify(timetableStoragePref));
             // Renaming the 'Default Table' option
@@ -3949,10 +4007,7 @@ document
             const pArrow = document.createElement('p');
             pArrow.classList.add('arrow');
 
-            const h4 = document.createElement('h4');
-            h4.textContent = `[${credits}]`;
             divH2s.appendChild(h2);
-            divH2s.appendChild(h4);
             h2.appendChild(spanCname);
             h2.appendChild(pArrow);
             divHeading.appendChild(divH2s);

@@ -29,7 +29,7 @@
 
 .dropdown-heading {
     cursor: pointer;
-    border: #020202;
+    border: var(--table-border-color);
 }
 
 .arrow {
@@ -44,7 +44,7 @@
     transition: transform 0.3s ease;
 }
 .dropdown-list h5 h6 {
-    color: #020202;
+    color: var(--text-color);
     padding-left: 2%;
 }
 
@@ -75,12 +75,12 @@
 }
 
 .dropdown .h2s {
-    color: #070707;
+    color: var(--text-color);
     font-weight: bold;
     padding: 1%;
     padding-left: 3%;
-    border-top: 0.5px solid rgba(0, 0, 0, 0.2);
-    background-color: rgb(252, 252, 252);
+    border-top: 0.5px solid var(--table-border-color);
+    background-color: var(--background-color);
     margin: 0;
 }
 
@@ -111,21 +111,21 @@
 }
 
 .dropdown li {
-    color: #000000da;
+    color: var(--text-color);
     padding-right: 5px;
     font-size: large;
     font-weight: 600;
     padding-left: 5%;
     padding-top: 8px;
     padding-bottom: 8px;
-    border-top: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-top: 0.5px solid var(--table-border-color);
 }
 .dropdown li label {
     padding-left: 3%;
 }
 
 .left-border {
-    border-left: 0.5px solid rgba(0, 0, 0, 0.2);
+    border-left: 0px solid var(--table-border-color);
 }
 
 .left-box {
@@ -165,7 +165,7 @@
 }
 
 li.sortable-chosen {
-    background-color: rgb(217, 234, 255) !important;
+    background-color: var(--primary-color) !important;
 }
 
 .dropdown ul li {
@@ -245,7 +245,7 @@ input[type='radio'] {
     #div-for-attack-slot legend {
         font-size: medium !important;
         font-weight: bold;
-        color: #020202;
+        color: var(--text-color);
         padding-bottom: 1%;
     }
     #div-for-attack-slot h4,
@@ -258,7 +258,7 @@ input[type='radio'] {
 }
 
 .select_background {
-    background-color: rgb(244, 173, 246) !important;
+    background-color: var(--slot-button-selected-color) !important;
 }
 
 @media screen and (max-width: 850px) {
@@ -284,7 +284,7 @@ input[type='radio'] {
 }
 
 tr.sortable-chosen1 td {
-    background-color: rgb(217, 234, 255);
+    background-color: var(--primary-color);
 }
 
 #subjectArea input[type='radio'] {
@@ -292,7 +292,7 @@ tr.sortable-chosen1 td {
     pointer-events: none !important;
 }
 .sortable-chosen .h2s {
-    background-color: rgb(217, 234, 255) !important;
+    background-color: var(--primary-color) !important;
 }
 
 #div-for-attack-slot {
@@ -311,7 +311,7 @@ tr.sortable-chosen1 td {
 #div-for-attack-slot legend {
     font-size: large;
     font-weight: bold;
-    color: #020202;
+    color: var(--text-color);
     padding-bottom: 1%;
 }
 #div-for-attack-slot h4,
@@ -364,4 +364,26 @@ tr.sortable-chosen1 td {
     #teachers-multiple-input {
         min-height: 250px;
     }
+}
+
+
+.easy-autocomplete-container {
+    background: black;
+}
+ .easy-autocomplete-container ul {
+    background: black !important;
+    color: white;
+}
+
+.easy-autocomplete-container ul li {
+    background: black !important;
+    color: white !important;
+    padding: 5px 10px;
+    font-size: medium;
+    font-weight: 500;
+}
+
+.easy-autocomplete-container ul li:hover {
+    background: black !important;
+    color: white !important;
 }
