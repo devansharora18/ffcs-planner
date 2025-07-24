@@ -1,11 +1,7 @@
-/**
- *  Modern glassmorphic styling for the timetable section
- *  with pill-shaped elements and clean design
- */
+
 
 @import 'global/colors.scss';
 
-// Option buttons styling with glassmorphic effect - using universal design
 #option-buttons {
     .btn {
         border: none !important;
@@ -68,6 +64,7 @@
 
 #tt-picker-dropdown {
     background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 15px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
