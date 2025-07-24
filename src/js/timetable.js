@@ -2831,9 +2831,14 @@ function updateCredits() {
     var totalCredits = 0;
 
     $('#course-list tbody tr').each(function () {
-        totalCredits += Number(
+        var creditsValue = Number(
             $(this).children('td').eq(getColumnIndex('Credits')).text(),
         );
+        
+        // Ensure credits is a valid number
+        if (!isNaN(creditsValue)) {
+            totalCredits += creditsValue;
+        }
     });
 
     $('#total-credits').text(totalCredits);
@@ -2853,7 +2858,7 @@ window.addCourseToCourseList = (courseData) => {
             <td>${courseData.courseTitle}</td>
             <td>${courseData.faculty}</td>
             <td>${courseData.venue}</td>
-            <td>${courseData.credits}</td>
+            <td>${courseData.credits || '0'}</td>
             <td><i class="fas fa-times close"></i></td>
         </tr>`,
     );

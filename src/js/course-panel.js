@@ -90,6 +90,11 @@ $(() => {
         var venue = $(this).data('venue');
         var credits = $(this).data('credits');
 
+        // Ensure credits has a valid value
+        if (credits === undefined || credits === null || credits === '') {
+            credits = '0';
+        }
+
         $('#slot-input').val(slot);
         $('#faculty-input').val(faculty);
         $('#venue-input').val(venue);
@@ -142,6 +147,16 @@ $(() => {
 
         // Reset is-project-input once read
         $('#is-project-input').val('false');
+
+        // Set default credits if empty
+        if (credits === '' || credits === undefined || credits === null) {
+            credits = '0';
+        }
+
+        // Ensure credits is a number
+        if (isNaN(credits)) {
+            credits = '0';
+        }
 
         if (course[0] == '') {
             $('#course-input').trigger('focus');
@@ -239,6 +254,14 @@ function initializeAutocomplete() {
                 var code = $('#course-input').getSelectedItemData().CODE;
 
                 $('#course-input').val(code + ' - ' + title);
+                // Clear all fields when a new course is selected
+                $('#slot-input').val('');
+                $('#faculty-input').val('');
+                $('#venue-input').val('');
+                $('#credits-input').val('');
+                $('#is-project-input').val('false');
+                $('.slot-button.selected').removeClass('selected');
+                
                 addSlotButtons(code);
             },
         },
@@ -316,7 +339,7 @@ function buildSlotButton(courseData) {
     $slotButton.data('faculty', courseData.FACULTY);
     $slotButton.data('type', courseData.TYPE);
     $slotButton.data('venue', courseData.VENUE);
-    $slotButton.data('credits', courseData.CREDITS);
+    $slotButton.data('credits', courseData.CREDITS || '0');
 
     return $slotButton;
 }
