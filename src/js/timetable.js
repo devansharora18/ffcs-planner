@@ -1,4 +1,9 @@
 import { globalVars } from './timetable-support.js';
+import localforage from 'localforage/dist/localforage';
+import html2canvas from 'html2canvas/dist/html2canvas';
+import { parse, isValid, add } from 'date-fns';
+import { fi, is, te, th } from 'date-fns/locale';
+import { get } from 'jquery';
 // Destructure the properties from the globalVars object
 let {
     editSub,
@@ -2908,7 +2913,7 @@ window.addCourseToCourseList = (courseData) => {
     Function to remove a course
  */
 function removeCourseFromCourseList(course) {
-    $(`#courseList-tbody tr[data-course="${course}"]`).remove();
+    $(`#course-list tbody tr[data-course="${course}"]`).remove();
     updateCredits();
 }
 
@@ -2922,12 +2927,6 @@ window.clearCourseList = () => {
 
     updateCredits();
 };
-
-import localforage from 'localforage/dist/localforage';
-import html2canvas from 'html2canvas/dist/html2canvas';
-import { parse, isValid, add } from 'date-fns';
-import { fi, is, te, th } from 'date-fns/locale';
-import { get } from 'jquery';
 
 var timetableStoragePref = [
     {
@@ -3051,24 +3050,52 @@ $(() => {
             )
             .attr('disabled', true);
 
-        const width = $('#timetable')[0].scrollWidth;
+        const $timetable = $('#timetable');
+        if ($timetable.length === 0) {
+            alert('No timetable found to download');
+            $(this).html(buttonText).attr('disabled', false);
+            return;
+        }
+
+        const width = $timetable[0].scrollWidth;
         var $layout = $('<div></div>').css({
             padding: '2rem',
             position: 'absolute',
             top: 0,
             left: `calc(-${width}px - 4rem)`,
+            backgroundColor: '#000000',
+            minHeight: '100px'
         });
 
         $layout = appendHeader($layout, width);
 
-        const $timetableClone = $('#timetable').clone().css({
+        const $timetableClone = $timetable.clone().css({
             width: width,
+            backgroundColor: '#000000'
         });
         $('table', $timetableClone).css({
             margin: 0,
+            backgroundColor: '#000000',
+            border: '1px solid #ffffff'
         });
         $('tr', $timetableClone).css({
-            border: 'none',
+            border: 'none'
+        });
+        $('td, th', $timetableClone).css({
+            color: '#ffffff',
+            backgroundColor: 'transparent'
+        });
+        
+        // Handle highlighted cells
+        $('.highlight', $timetableClone).css({
+            backgroundColor: '#333333',
+            color: '#ffffff'
+        });
+        
+        // Handle course cells
+        $('td:has(div)', $timetableClone).css({
+            backgroundColor: '#1a1a1a',
+            color: '#ffffff'
         });
 
         $layout.append($timetableClone);
@@ -3077,6 +3104,10 @@ $(() => {
         html2canvas($layout[0], {
             scrollX: -window.scrollX,
             scrollY: -window.scrollY,
+            backgroundColor: '#000000',
+            scale: 2,
+            useCORS: true,
+            allowTaint: true
         }).then((canvas) => {
             $layout.remove();
             $(this).html(buttonText).attr('disabled', false);
@@ -3085,7 +3116,7 @@ $(() => {
                 .css({
                     display: 'none',
                 })
-                .attr('href', canvas.toDataURL('image/jpeg'))
+                .attr('href', canvas.toDataURL('image/jpeg', 0.9))
                 .attr(
                     'download',
                     `FFCS Planner ${activeTable.name} (Timetable).jpg`,
@@ -3094,6 +3125,11 @@ $(() => {
             $('body').append($a);
             $a[0].click();
             $a.remove();
+        }).catch((error) => {
+            console.error('Error generating timetable image:', error);
+            $layout.remove();
+            $(this).html(buttonText).attr('disabled', false);
+            alert('Error generating timetable image. Please try again.');
         });
     });
 
@@ -3112,27 +3148,38 @@ $(() => {
             )
             .attr('disabled', true);
 
-        const width = $('#course-list')[0].scrollWidth;
+        const $courseList = $('#course-list');
+        if ($courseList.length === 0) {
+            alert('No course list found to download');
+            $(this).html(buttonText).attr('disabled', false);
+            return;
+        }
+
+        const width = $courseList[0].scrollWidth;
         var $layout = $('<div></div>').css({
             padding: '2rem',
             position: 'absolute',
             top: 0,
             left: `calc(-${width}px - 4rem)`,
+            backgroundColor: '#000000',
+            minHeight: '100px'
         });
 
         $layout = appendHeader($layout, width);
 
-        const $courseListClone = $('#course-list').clone().css({
+        const $courseListClone = $courseList.clone().css({
             width: width,
-            border: '1px solid var(--table-border-color)',
+            border: '1px solid #ffffff',
             'border-bottom': 'none',
+            backgroundColor: '#000000'
         });
         $('table', $courseListClone).css({
             margin: 0,
+            backgroundColor: '#000000'
         });
         $('tr', $courseListClone)
             .css({
-                border: 'none',
+                border: 'none'
             })
             .each(function () {
                 if ($(this).children().length == 1) {
@@ -3142,6 +3189,10 @@ $(() => {
                 $('th:last-child', this).remove();
                 $('td:last-child', this).remove();
             });
+        $('td, th', $courseListClone).css({
+            color: '#ffffff',
+            backgroundColor: 'transparent'
+        });
 
         $layout.append($courseListClone);
         $('body').append($layout);
@@ -3149,6 +3200,10 @@ $(() => {
         html2canvas($layout[0], {
             scrollX: -window.scrollX,
             scrollY: -window.scrollY,
+            backgroundColor: '#000000',
+            scale: 2,
+            useCORS: true,
+            allowTaint: true
         }).then((canvas) => {
             $layout.remove();
             $(this).html(buttonText).attr('disabled', false);
@@ -3157,7 +3212,7 @@ $(() => {
                 .css({
                     display: 'none',
                 })
-                .attr('href', canvas.toDataURL('image/jpeg'))
+                .attr('href', canvas.toDataURL('image/jpeg', 0.9))
                 .attr(
                     'download',
                     `FFCS Planner ${activeTable.name} (Course List).jpg`,
@@ -3166,6 +3221,11 @@ $(() => {
             $('body').append($a);
             $a[0].click();
             $a.remove();
+        }).catch((error) => {
+            console.error('Error generating course list image:', error);
+            $layout.remove();
+            $(this).html(buttonText).attr('disabled', false);
+            alert('Error generating course list image. Please try again.');
         });
     });
 
@@ -3254,36 +3314,59 @@ function appendHeader($layout, width) {
         .css({
             width: width,
             'margin-bottom': '1rem',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
         })
         .append(
-            $('<h3>FFCS Planner</h3>').css({
-                margin: 0,
-                display: 'inline',
-                color: '#005c5c',
-                'font-weight': 'bold',
-            }),
+            $('<div></div>')
+                .css({
+                    display: 'flex',
+                    alignItems: 'center'
+                })
+                .append(
+                    $('<img>')
+                        .attr('src', './images/doodles/gdsc.svg')
+                        .attr('alt', 'GDSC Logo')
+                        .css({
+                            height: '40px',
+                            marginRight: '15px'
+                        })
+                        .on('error', function() {
+                            // Fallback if image fails to load
+                            $(this).hide();
+                        })
+                )
+                .append(
+                    $('<h3>GDSC VIT</h3>').css({
+                        margin: 0,
+                        color: '#ffffff',
+                        'font-weight': 'bold',
+                    })
+                )
         )
         .append(
             $(`<h3>${campus} Campus</h3>`).css({
                 margin: 0,
-                display: 'inline',
-                color: '#707070',
-                float: 'right',
-            }),
-        )
-        .append(
-            $('<hr>').css({
-                'border-color': '#000000',
-                'border-width': '2px',
+                color: '#ffffff',
             }),
         );
+    
+    const $hr = $('<hr>').css({
+        'border-color': '#ffffff',
+        'border-width': '1px',
+        width: width,
+        margin: '1rem 0'
+    });
+    
     const $title = $(`<h4>${activeTable.name}</h4>`).css({
         'margin-bottom': '1rem',
         width: width,
         'text-align': 'center',
+        color: '#ffffff'
     });
 
-    return $layout.append($header).append($title);
+    return $layout.append($header).append($hr).append($title);
 }
 
 // Function to update the saved data
