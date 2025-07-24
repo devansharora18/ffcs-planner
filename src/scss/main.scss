@@ -131,11 +131,16 @@ footer {
 ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
-    background: var(--primary-light-color);
+    background: #121212;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--primary-color);
+    background: #303030;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #505050;
 }
 
 /* Dark theme styles for cards and containers - NOT navbar */
